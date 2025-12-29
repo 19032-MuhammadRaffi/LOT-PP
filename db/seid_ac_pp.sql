@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 23, 2025 at 05:34 AM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.0.28
+-- Generation Time: Dec 13, 2025 at 12:02 PM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,34 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `seid_ac_pp`
 --
-
--- --------------------------------------------------------
-
---
--- Table structure for table `history_ls`
---
-
-CREATE TABLE `history_ls` (
-  `id` int(11) NOT NULL,
-  `date_prod` date NOT NULL,
-  `part_code` varchar(32) NOT NULL,
-  `qty_end_press` int(11) NOT NULL,
-  `qty_end_paint` int(11) NOT NULL,
-  `qty_end_assy` int(11) NOT NULL,
-  `qty_bk_press` int(11) NOT NULL,
-  `qty_bk_paint` int(11) NOT NULL,
-  `qty_bk_assy` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `history_ls`
---
-
-INSERT INTO `history_ls` (`id`, `date_prod`, `part_code`, `qty_end_press`, `qty_end_paint`, `qty_end_assy`, `qty_bk_press`, `qty_bk_paint`, `qty_bk_assy`) VALUES
-(1, '2025-12-23', 'CCHS-B829JBTA', 850, 100, 0, 20, 10, 20),
-(2, '2025-12-23', 'GCAB-A646JBTA', 790, 80, 0, 10, 10, 10),
-(3, '2025-12-23', 'GCAB-A767JBTA', 700, 50, 0, 0, 0, 0),
-(4, '2025-12-23', 'PPLT-B282JBTA', 1800, 100, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -67,10 +39,10 @@ CREATE TABLE `part` (
 --
 
 INSERT INTO `part` (`part_code`, `part_name`, `qty_press`, `qty_paint`) VALUES
-('CCHS-B829JBTA', 'Base Pan', 850, 100),
-('GCAB-A646JBTA', 'Top Table', 790, 80),
-('GCAB-A767JBTA', 'Front Panel', 700, 50),
-('PPLT-B282JBTA', 'Side Cover', 1800, 100);
+('CCHS-B829JBTA', 'Base Pan', 2600, 0),
+('GCAB-A646JBTA', 'Top Table', 800, 100),
+('GCAB-A767JBTA', 'Front Panel', 900, 0),
+('PPLT-B282JBTA', 'Side Cover', 800, 200);
 
 -- --------------------------------------------------------
 
@@ -92,28 +64,17 @@ CREATE TABLE `transaction` (
 --
 
 INSERT INTO `transaction` (`id`, `part_code`, `date_tr`, `shift`, `qty`, `status`) VALUES
-(36, 'CCHS-B829JBTA', '2025-12-22 12:19:19', '1', 1000, 'PRESS'),
-(37, 'GCAB-A646JBTA', '2025-12-22 12:19:33', '1', 900, 'PRESS'),
-(38, 'GCAB-A767JBTA', '2025-12-22 12:19:37', '1', 800, 'PRESS'),
-(39, 'PPLT-B282JBTA', '2025-12-22 12:19:41', '1', 2000, 'PRESS'),
-(40, 'CCHS-B829JBTA', '2025-12-22 12:20:08', '1', 200, 'PAINT'),
-(41, 'CCHS-B829JBTA', '2025-12-22 12:20:19', '1', 200, 'PAINT'),
-(42, 'CCHS-B829JBTA', '2025-12-22 12:20:40', '1', 400, 'PAINT'),
-(43, 'CCHS-B829JBTA', '2025-12-22 12:23:18', '1', 300, 'ASSY'),
-(44, 'CCHS-B829JBTA', '2025-12-22 12:23:27', '1', 200, 'ASSY'),
-(45, 'CCHS-B829JBTA', '2025-12-23 09:54:06', '1', 500, 'PRESS'),
-(46, 'CCHS-B829JBTA', '2025-12-23 10:04:17', '1', 200, 'ASSY'),
-(47, 'CCHS-B829JBTA', '2025-12-23 10:40:30', '1', 200, 'PRESS'),
-(48, 'CCHS-B829JBTA', '2025-12-23 11:08:09', '1', 30, 'PAINT'),
-(49, 'GCAB-A646JBTA', '2025-12-23 11:08:13', '1', 100, 'PAINT'),
-(50, 'GCAB-A767JBTA', '2025-12-23 11:08:16', '1', 100, 'PAINT'),
-(51, 'PPLT-B282JBTA', '2025-12-23 11:08:19', '1', 200, 'PAINT'),
-(52, 'CCHS-B829JBTA', '2025-12-23 11:08:34', '1', 50, 'ASSY'),
-(53, 'GCAB-A646JBTA', '2025-12-23 11:08:37', '1', 50, 'ASSY'),
-(54, 'PPLT-B282JBTA', '2025-12-23 11:09:03', '1', 100, 'ASSY'),
-(55, 'GCAB-A767JBTA', '2025-12-23 11:09:06', '1', 50, 'ASSY'),
-(56, 'GCAB-A646JBTA', '2025-12-23 11:09:09', '1', 50, 'ASSY'),
-(57, 'CCHS-B829JBTA', '2025-12-23 11:09:12', '1', 50, 'ASSY');
+(15, 'CCHS-B829JBTA', '2025-12-13 14:51:26', '1', 1000, 'PRESS'),
+(16, 'CCHS-B829JBTA', '2025-12-13 18:00:00', '2', 800, 'PRESS'),
+(20, 'CCHS-B829JBTA', '2025-12-14 00:40:00', '3', 800, 'PRESS'),
+(21, 'GCAB-A646JBTA', '2025-12-13 16:00:48', '1', 1000, 'PRESS'),
+(22, 'GCAB-A767JBTA', '2025-12-13 16:00:54', '1', 1000, 'PRESS'),
+(23, 'PPLT-B282JBTA', '2025-12-13 16:00:58', '1', 1000, 'PRESS'),
+(24, 'PPLT-B282JBTA', '2025-12-13 16:01:24', '1', 200, 'PAINT'),
+(25, 'GCAB-A767JBTA', '2025-12-13 16:01:31', '1', 100, 'PAINT'),
+(26, 'GCAB-A646JBTA', '2025-12-13 16:01:35', '1', 200, 'PAINT'),
+(30, 'GCAB-A646JBTA', '2025-12-13 16:07:09', '1', 100, 'ASSY'),
+(31, 'GCAB-A767JBTA', '2025-12-13 16:08:52', '1', 100, 'ASSY');
 
 -- --------------------------------------------------------
 
@@ -142,12 +103,6 @@ INSERT INTO `user` (`username`, `password`, `role`) VALUES
 --
 
 --
--- Indexes for table `history_ls`
---
-ALTER TABLE `history_ls`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `part`
 --
 ALTER TABLE `part`
@@ -164,16 +119,10 @@ ALTER TABLE `transaction`
 --
 
 --
--- AUTO_INCREMENT for table `history_ls`
---
-ALTER TABLE `history_ls`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
 -- AUTO_INCREMENT for table `transaction`
 --
 ALTER TABLE `transaction`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
