@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 13, 2025 at 12:02 PM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Waktu pembuatan: 29 Des 2025 pada 14.17
+-- Versi server: 10.4.32-MariaDB
+-- Versi PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `part`
+-- Struktur dari tabel `part`
 --
 
 CREATE TABLE `part` (
@@ -35,19 +35,19 @@ CREATE TABLE `part` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `part`
+-- Dumping data untuk tabel `part`
 --
 
 INSERT INTO `part` (`part_code`, `part_name`, `qty_press`, `qty_paint`) VALUES
-('CCHS-B829JBTA', 'Base Pan', 2600, 0),
-('GCAB-A646JBTA', 'Top Table', 800, 100),
-('GCAB-A767JBTA', 'Front Panel', 900, 0),
-('PPLT-B282JBTA', 'Side Cover', 800, 200);
+('CCHS-B829JBTA', 'Base Pan', 0, 0),
+('GCAB-A646JBTA', 'Top Table', 0, 0),
+('GCAB-A767JBTA', 'Front Panel', 0, 0),
+('PPLT-B282JBTA', 'Side Cover', 0, 0);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `transaction`
+-- Struktur dari tabel `transaction`
 --
 
 CREATE TABLE `transaction` (
@@ -59,27 +59,10 @@ CREATE TABLE `transaction` (
   `status` enum('PRESS','PAINT','ASSY') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `transaction`
---
-
-INSERT INTO `transaction` (`id`, `part_code`, `date_tr`, `shift`, `qty`, `status`) VALUES
-(15, 'CCHS-B829JBTA', '2025-12-13 14:51:26', '1', 1000, 'PRESS'),
-(16, 'CCHS-B829JBTA', '2025-12-13 18:00:00', '2', 800, 'PRESS'),
-(20, 'CCHS-B829JBTA', '2025-12-14 00:40:00', '3', 800, 'PRESS'),
-(21, 'GCAB-A646JBTA', '2025-12-13 16:00:48', '1', 1000, 'PRESS'),
-(22, 'GCAB-A767JBTA', '2025-12-13 16:00:54', '1', 1000, 'PRESS'),
-(23, 'PPLT-B282JBTA', '2025-12-13 16:00:58', '1', 1000, 'PRESS'),
-(24, 'PPLT-B282JBTA', '2025-12-13 16:01:24', '1', 200, 'PAINT'),
-(25, 'GCAB-A767JBTA', '2025-12-13 16:01:31', '1', 100, 'PAINT'),
-(26, 'GCAB-A646JBTA', '2025-12-13 16:01:35', '1', 200, 'PAINT'),
-(30, 'GCAB-A646JBTA', '2025-12-13 16:07:09', '1', 100, 'ASSY'),
-(31, 'GCAB-A767JBTA', '2025-12-13 16:08:52', '1', 100, 'ASSY');
-
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user`
+-- Struktur dari tabel `user`
 --
 
 CREATE TABLE `user` (
@@ -89,7 +72,7 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `user`
+-- Dumping data untuk tabel `user`
 --
 
 INSERT INTO `user` (`username`, `password`, `role`) VALUES
@@ -103,23 +86,29 @@ INSERT INTO `user` (`username`, `password`, `role`) VALUES
 --
 
 --
--- Indexes for table `part`
+-- Indeks untuk tabel `part`
 --
 ALTER TABLE `part`
   ADD PRIMARY KEY (`part_code`);
 
 --
--- Indexes for table `transaction`
+-- Indeks untuk tabel `transaction`
 --
 ALTER TABLE `transaction`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- Indeks untuk tabel `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`username`);
+
+--
+-- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
 --
--- AUTO_INCREMENT for table `transaction`
+-- AUTO_INCREMENT untuk tabel `transaction`
 --
 ALTER TABLE `transaction`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
