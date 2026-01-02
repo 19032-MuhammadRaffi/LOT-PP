@@ -1,4 +1,7 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 require '../../conn.php';
 session_start();
 if (!isset($_SESSION['role']) || $_SESSION['role'] != 'Admin') {
@@ -39,16 +42,22 @@ if (isset($_POST['btn_add_user'])) {
 
 // Add Part
 if (isset($_POST['btn_add_part'])) {
-    $part_code = $_POST['part_code'];
-    $part_name = $_POST['part_name'];
 
-    $query = "INSERT INTO part (part_code, part_name) VALUES ('$part_code', '$part_name')";
-    mysqli_query($conn, $query);
+    $stmt = $conn->prepare(
+        "INSERT INTO part (part_code, part_name) VALUES (?, ?)"
+    );
+
+    $stmt->bind_param("ss", $_POST['part_codes'], $_POST['part_names']);
+
+    if (!$stmt->execute()) {
+        echo "<script>alert(" . json_encode("Error: " . $stmt->error) . ");</script>";
+        echo "<script>console.error(" . json_encode($stmt->error) . ");</script>";
+        exit;
+    }
+
     echo "<script>alert('Success');</script>";
-    echo "<script>window.location.href = 'index.php';</script>";
-    exit;
+    echo "<script>window.location.href='index.php';</script>";
 }
-
 ?>
 
 <!doctype html>
@@ -197,11 +206,11 @@ if (isset($_POST['btn_add_part'])) {
                                             </div>
                                             <div class="modal-body">
                                                 <div class="form-floating mb-3">
-                                                    <input type="text" class="form-control" id="floatingPartCode" name="part_code">
+                                                    <input type="text" class="form-control" id="floatingPartCode" name="part_codes">
                                                     <label for="floatingPartCode">Part Code</label>
                                                 </div>
                                                 <div class="form-floating">
-                                                    <input type="text" class="form-control" id="floatingPartName" name="part_name">
+                                                    <input type="text" class="form-control" id="floatingPartName" name="part_names">
                                                     <label for="floatingPartName">Part Name</label>
                                                 </div>
                                             </div>
