@@ -237,6 +237,18 @@ if (isset($_POST['btn_finish'])) {
     mysqli_begin_transaction($conn);
 
     try {
+        // Cek stock paint cukup
+        $stockCheck = mysqli_query($conn, "
+            SELECT qty_paint 
+            FROM part 
+            WHERE part_code = '$partCode'
+        ");
+        $stockData = mysqli_fetch_assoc($stockCheck);
+        $currentStock = (int)$stockData['qty_paint'];
+        if ($currentStock < $qty) {
+            throw new Exception('ERROR: Insufficient paint stock');
+        }
+
         // INSERT TRANSACTION ASSY
         if (!mysqli_query($conn, "
             INSERT INTO `transaction`
