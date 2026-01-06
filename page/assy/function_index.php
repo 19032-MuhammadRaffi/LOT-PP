@@ -44,10 +44,13 @@ function getShift($time)
 $now = date('Y-m-d H:i:s');
 
 // KHUSUS TESTING
-// $now = '2026-01-07 00:40:00';
+// $now = '2026-01-07 01:40:00';
 
 $currentDate  = getProductionDateOnly($now);               // PRODUCTION DATE
 $currentShift = getShift(date('H:i', strtotime($now)));   // PRODUCTION SHIFT
+
+$currentDateTr  = $currentDate . ' ' . date('H:i:s', strtotime($now));
+$currentShiftTr = $currentShift;
 
 $productionDateDisplay  = date('d/m/Y', strtotime($currentDate));
 $productionShiftDisplay = $currentShift;
@@ -122,42 +125,53 @@ updateHistoryLS($conn);
 
 // INIT PART DATA
 $komponen = [];
-$partResult = mysqli_query($conn, "SELECT part_code, part_name FROM part");
+$partResult = mysqli_query($conn, "
+    SELECT part_code, part_name 
+    FROM part
+");
+
 while ($row = mysqli_fetch_assoc($partResult)) {
     $komponen[$row['part_code']] = [
         'part_code' => $row['part_code'],
         'part_name' => $row['part_name'],
+
         'total_press' => 0,
         'total_paint' => 0,
-        'total_assy' => 0,
+        'total_assy'  => 0,
+
         'daily_press' => 0,
         'daily_paint' => 0,
-        'daily_assy' => 0,
+        'daily_assy'  => 0,
+
         'shift1_press' => 0,
         'shift1_paint' => 0,
-        'shift1_assy' => 0,
+        'shift1_assy'  => 0,
+
         'shift2_press' => 0,
         'shift2_paint' => 0,
-        'shift2_assy' => 0,
+        'shift2_assy'  => 0,
+
         'shift3_press' => 0,
         'shift3_paint' => 0,
-        'shift3_assy' => 0,
+        'shift3_assy'  => 0,
+
         'stock_press' => 0,
         'stock_paint' => 0,
+
         'qty_bk_press' => 0,
         'qty_bk_paint' => 0,
-        'qty_bk_assy' => 0
+        'qty_bk_assy'  => 0
     ];
 }
 
-// GET TRANSACTIONS
+// ---------- TRANSACTIONS (MONTHLY ONLY) ----------
 function getTrans($status)
 {
     return "
-        SELECT part_code,date_tr,shift,qty
+        SELECT part_code, date_tr, shift, qty
         FROM `transaction`
-        WHERE status='$status'
-        AND DATE_FORMAT(date_tr,'%Y-%m')=DATE_FORMAT(CURDATE(),'%Y-%m')
+        WHERE status = '$status'
+          AND DATE_FORMAT(date_tr, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')
     ";
 }
 
@@ -165,26 +179,33 @@ $pressData = mysqli_query($conn, getTrans('PRESS'));
 $paintData = mysqli_query($conn, getTrans('PAINT'));
 $assyData  = mysqli_query($conn, getTrans('ASSY'));
 
-// TRANSACTION LOOP (PRESS / PAINT / ASSY)
+// ---------- TRANSACTION LOOP (PRESS / PAINT / ASSY) ----------
 foreach (
     [
         'PRESS' => ['total_press', 'daily_press', 'press'],
         'PAINT' => ['total_paint', 'daily_paint', 'paint'],
-        'ASSY' => ['total_assy', 'daily_assy', 'assy']
+        'ASSY'  => ['total_assy',  'daily_assy',  'assy']
     ] as $status => $map
 ) {
 
     $result = ${strtolower($status) . 'Data'};
 
     while ($tr = mysqli_fetch_assoc($result)) {
-        $p = $tr['part_code'];
-        $qty = (int)$tr['qty'];
-        $shift = (int)$tr['shift'];
-        $prodDate = getProductionDateOnly($tr['date_tr']);
 
+        if (!isset($komponen[$tr['part_code']])) continue;
+
+        $p     = $tr['part_code'];
+        $qty   = (int)$tr['qty'];
+        $shift = (int)$tr['shift'];
+
+        // ⚠️ PAKAI TANGGAL ASLI TRANSAKSI
+        $trDate = date('Y-m-d', strtotime($tr['date_tr']));
+
+        // TOTAL BULANAN
         $komponen[$p][$map[0]] += $qty;
 
-        if ($prodDate === $currentDate) {
+        // DAILY + SHIFT (BERDASARKAN currentDate)
+        if ($trDate === $currentDate) {
             $komponen[$p][$map[1]] += $qty;
             $komponen[$p]["shift{$shift}_{$map[2]}"] += $qty;
         }
@@ -232,7 +253,7 @@ if (isset($_POST['btn_finish'])) {
             INSERT INTO `transaction`
             (part_code, date_tr, shift, qty, status)
             VALUES
-            ('$partCode', '$now', '$currentShift', '$qty', 'ASSY')
+            ('$partCode', '$currentDateTr', '$currentShiftTr', '$qty', 'ASSY')
         ");
 
         mysqli_query($conn, "
