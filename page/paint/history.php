@@ -100,8 +100,7 @@ require 'function_history.php';
                 <div class="col-md-6 col-lg-6 col-xl-3 mt-2">
                     <div class="card text-center mb-3">
                         <div class="card-body align-middle" style="font-size: 10px;">
-                            <h4 class="card-title"><?= $data['part_name'] . " (" . $data['part_code'] . ")" ?></h4>
-
+                            <h5 class="card-title"><?= $data['part_name'] . " (" . $data['part_code'] . ")" ?></h5>
                             <!-- Monthly -->
                             <div class="d-flex justify-content-center mt-2">
                                 <button class="btn btn-sm btn-primary w-100" disabled>Monthly</button>
@@ -112,7 +111,6 @@ require 'function_history.php';
                                 <button class="btn btn-sm btn-primary w-100 me-1" disabled>Painting</button>
                                 <button class="btn btn-sm btn-primary w-100" disabled>Assy</button>
                             </div>
-
                             <!-- Total Production -->
                             <div class="d-flex justify-content-center mt-1">
                                 <button class="btn btn-sm btn-outline w-100 me-1" disabled>Output</button>
@@ -120,7 +118,6 @@ require 'function_history.php';
                                 <button class="btn btn-sm btn-outline w-100 me-1" disabled><?= $data['total_paint'] ?></button>
                                 <button class="btn btn-sm btn-outline w-100" disabled><?= $data['total_assy'] ?></button>
                             </div>
-
                             <!-- Monthly Bon Kuning -->
                             <div class="d-flex justify-content-center mt-1">
                                 <button class="btn btn-sm btn-outline w-100 me-1" disabled>Voucher</button>
@@ -128,7 +125,6 @@ require 'function_history.php';
                                 <button class="btn btn-sm btn-outline w-100 me-1" disabled><?= $data['qty_bk_paint'] ?></button>
                                 <button class="btn btn-sm btn-outline w-100" disabled><?= $data['qty_bk_assy'] ?></button>
                             </div>
-
                             <!-- End Stock -->
                             <div class="d-flex justify-content-center mt-1">
                                 <button class="btn btn-sm btn-outline w-100 me-1" disabled>End Stock</button>
@@ -136,7 +132,6 @@ require 'function_history.php';
                                 <button class="btn btn-sm btn-outline w-100 me-1" disabled><?= $data['qty_end_paint'] ?></button>
                                 <button class="btn btn-sm btn-outline w-100" disabled><?= $data['qty_end_assy'] ?></button>
                             </div>
-
                             <!-- Daily -->
                             <div class="d-flex justify-content-center mt-1">
                                 <button class="btn btn-sm btn-success w-100" disabled>Daily</button>
@@ -147,7 +142,6 @@ require 'function_history.php';
                                 <button class="btn btn-sm btn-success w-100 me-1" disabled>Painting</button>
                                 <button class="btn btn-sm btn-success w-100" disabled>Assy</button>
                             </div>
-
                             <!-- Daily per tanggal -->
                             <?php foreach ($dates as $date): ?>
                                 <?php

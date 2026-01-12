@@ -35,8 +35,8 @@ function getProductionDateOnly($datetime)
 // Function Shift
 function getShift($time)
 {
-    if ($time >= '08:00' && $time < '17:00') return 1;
-    if ($time >= '17:00' || $time < '00:30') return 2;
+    if ($time >= '09:00' && $time < '18:00') return 1;
+    if ($time >= '18:00' || $time < '01:30') return 2;
     return 3;
 }
 
