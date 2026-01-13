@@ -130,9 +130,22 @@ $partResult = mysqli_query($conn, "
     FROM part
 ");
 
+// PART CODE DISPLAY OVERRIDE (TAMPILAN SAJA)
+$partAlias = [
+    'CCHS-B829JBTA' => 'LCHS-A800JBPZ',
+    'GCAB-A646JBTA' => 'GCAB-A646JBPZ',
+    'GCAB-A767JBTA' => 'GCAB-A767JBPZ',
+    'PPLT-B282JBTA' => 'PPLT-B282JBPZ',
+];
+
 while ($row = mysqli_fetch_assoc($partResult)) {
-    $komponen[$row['part_code']] = [
-        'part_code' => $row['part_code'],
+
+    $originalCode = $row['part_code'];
+
+    $komponen[$originalCode] = [
+        'part_code'    => $originalCode,
+        'display_code' => $partAlias[$originalCode] ?? $originalCode,
+
         'part_name' => $row['part_name'],
 
         'total_press' => 0,
@@ -163,6 +176,7 @@ while ($row = mysqli_fetch_assoc($partResult)) {
         'qty_bk_assy'  => 0
     ];
 }
+
 
 // ---------- TRANSACTIONS (MONTHLY ONLY) ----------
 function getTrans($status)
